@@ -81,7 +81,7 @@ export default class DataProApi {
     const reCaptchaToken = await new TwoCaptchaApi().resolveReCaptchaV2(googleKey, loginUrl);
     if (reCaptchaToken == null) throw new Error(`Cannot resolve captcha from ${loginUrl}`);
 
-    const browser = await puppeteer.launch({ headless: false, slowMo: 10 });
+    const browser = await puppeteer.launch({ headless: 'new', slowMo: 10 });
     const page = await browser.newPage();
 
     await page.goto(loginUrl);
