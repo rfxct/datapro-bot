@@ -1,10 +1,10 @@
 {
   "name": "unboxd.app",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js",
+    "start": "node dist/index.js",
     "build": "tsc --build",
     "dev": "tsx --watch -r dotenv/config index.ts",
     "lint": "eslint --quiet --fix --ext .js,.ts .",
