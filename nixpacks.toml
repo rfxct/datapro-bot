@@ -1,0 +1,5 @@
+[phases.build]
+cmds = ['npm run build', 'rm -rf **/**.ts']
+
+[start]
+cmd = 'npm run start'
