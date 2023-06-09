@@ -2,4 +2,4 @@
 cmd = 'rm -rf **/**.ts'
 
 [start]
-cmd = ['cd dist', 'node index.js']
+cmd = 'cd dist && node index.js'
