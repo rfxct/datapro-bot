@@ -6,3 +6,6 @@ cache
 
 # env vars
 .env
+
+# dist
+dist

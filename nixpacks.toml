@@ -1,2 +1,5 @@
+[phases.clean]
+cmd = 'rm -rf **/**.ts
+
 [start]
-cmd = 'npm run start'
+cmd = ['cd dist', 'node index.js']
