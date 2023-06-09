@@ -16,7 +16,7 @@ export default class DataProApi {
   protected credentials: ICredentials | Record<string, string> = {};
 
   protected webservice = axios.create({
-    baseURL: 'https://painelempresarial.business',
+    baseURL: 'https://buscadorempresarial.net',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded', Cookie: this.jsonCookieToString ?? '' },
 
     withCredentials: true,

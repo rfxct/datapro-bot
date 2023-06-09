@@ -2,7 +2,6 @@ import { Routes, type TextChannel } from 'discord.js';
 import type SilverClient from '../SilverClient';
 
 import ObserverStructure from '../structures/Observer';
-import { type Protocol } from 'puppeteer';
 
 export default class MainObserver extends ObserverStructure {
   constructor(client: SilverClient) {
@@ -13,31 +12,24 @@ export default class MainObserver extends ObserverStructure {
 
       const cookieChat = (await this.client.channels.fetch(process.env.COOKIE_CHANNEL_ID)) as TextChannel;
 
-      let fetchingNew = false;
-
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
       setInterval(async () => {
-        if (fetchingNew) return;
-
-        const lastCookies = await cookieChat.messages
+        const lastCookie = await cookieChat.messages
           .fetch({
             cache: false,
             limit: 1
           })
-          .then((messages) => messages.first()?.content ?? '[]')
-          .then((content) => JSON.parse(content) as Protocol.Network.Cookie[]);
+          .then((messages) => messages.first()?.content ?? '[]');
 
-        const valid = lastCookies.some((c) => c.name === 'sessionid' && c.expires - Date.now() / 1e3 >= 60 * 7);
+        await this.client.dataPro.get('/user_info');
 
-        if (!valid && !fetchingNew) {
-          fetchingNew = true;
-          await this.client.dataPro.regenerateAccessCookies();
-          fetchingNew = false;
+        const invalid = JSON.stringify(this.client.dataPro.currentSession) !== lastCookie;
 
+        if (invalid) {
           await cookieChat.bulkDelete(50);
           await cookieChat.send(JSON.stringify(this.client.dataPro.currentSession));
         }
-      }, 2 * 1e3);
+      }, 20 * 1e3);
     });
   }
 
